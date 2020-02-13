@@ -27,4 +27,5 @@ public class User implements Serializable {
   private String remark;
   @TableField("create_time")
   private Date createTime;
+  private String nickname; // 昵称
 }

@@ -25,30 +25,31 @@ public class RegisterController {
     Result result = new Result();
     String key = CryptoUtil.generateKey(); //生成key
     String newPwd = CryptoUtil.encryptStr(user.getPassword(),key);
-    String token = JwtUtils.createJWT(user.getUsername(),newPwd);
     Date date = new Date();
     user.setPassword(newPwd);
     user.setSecretKey(key);
-    user.setToken(token);
+//    user.setToken(token);
     user.setCreateTime(date);
     user.setState(0);
     boolean res = this.userServiceImpl.save(user);
     if(res) {
       result.setStatus(200);
+      result.setMsg("insert success!");
     } else {
       result.setStatus(400);
-      result.setErrorMsg("insert error!");
+      result.setMsg("insert error!");
     }
     return result;
   }
 
   /**
    * 用户名是否存在
-   * @param username 用户名
+   * @param validate 要验证得数据
+   * @type 1 验证昵称  2 验证 用户名
    * @return boolean
    */
   @PostMapping("/validateUser")
-  public boolean validateUser(String username) {
-    return this.userServiceImpl.existUser(username);
+  public boolean validateUser(String validate, Integer type) {
+    return this.userServiceImpl.existUser(validate,type);
   }
 }

@@ -12,5 +12,5 @@ import java.io.Serializable;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Result implements Serializable {
   private Integer status; // 200 成功 400 失败
-  private String ErrorMsg; // 错误信息
+  private String msg; // 错误信息
 }

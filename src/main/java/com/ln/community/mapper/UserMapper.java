@@ -11,4 +11,5 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<User> {
    List<User> existUser(@Param("username") String username);
    User getUser(@Param("username") String username);
+   void updateToken(@Param("id") String id, @Param("token") String token);
 }

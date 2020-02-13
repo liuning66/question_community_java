@@ -18,4 +18,15 @@
             </if>
         </where>
     </select>
+
+    <update id="updateToken">
+        <if test="token != null">
+            update user set token = #{token}
+            <where>
+                <if test="id != null">
+                    id = #{id}
+                </if>
+            </where>
+        </if>
+    </update>
 </mapper>
