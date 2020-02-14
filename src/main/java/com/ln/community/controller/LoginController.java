@@ -33,6 +33,7 @@ public class LoginController {
         newUser.setUsername(user.getUsername());
         newUser.setEmail(user.getEmail());
         newUser.setTelephone(user.getTelephone());
+        newUser.setNickname(user.getNickname());
         result.setRecord(newUser);
 
         if(token.length() > 0) {

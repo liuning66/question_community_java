@@ -28,7 +28,6 @@ public class RegisterController {
     Date date = new Date();
     user.setPassword(newPwd);
     user.setSecretKey(key);
-//    user.setToken(token);
     user.setCreateTime(date);
     user.setState(0);
     boolean res = this.userServiceImpl.save(user);
