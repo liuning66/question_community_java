@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ln.community.entity.User;
 import com.ln.community.mapper.UserMapper;
 import com.ln.community.service.UserService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
   @Override
   public void updateToken(String id, String token) {
     this.userMapper.updateToken(id,token);
+  }
+
+  @Override
+  public User selectUserById(String id) {
+    User user = this.userMapper.selectById(id);
+    if(user != null) {
+      return user;
+    } else {
+      return null;
+    }
   }
 
 }

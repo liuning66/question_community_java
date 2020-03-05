@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ln.community.mapper.QuestionMapper">
+    <select id="getAllQuestionInfo" resultType="questionInfo">
+        select q.*,u.nickname from question q
+        LEFT JOIN user u
+        ON  q.userId = u.id
+        <where>
+            q.isPass != 3
+        </where>
+        ORDER BY q.question_time DESC
+    </select>
+</mapper>
