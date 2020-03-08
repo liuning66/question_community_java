@@ -4,10 +4,36 @@
     <select id="getAllQuestionInfo" resultType="questionInfo">
         select q.*,u.nickname from question q
         LEFT JOIN user u
-        ON  q.userId = u.id
+        ON q.userId = u.id
         <where>
             q.isPass != 3
         </where>
         ORDER BY q.question_time DESC
     </select>
+
+    <select id="getQuestionComments" resultType="questionComment">
+        select c.*,u.nickname from comment c
+        LEFT JOIN user u
+        ON c.userId = u.id
+        <where>
+            <if test="questionId != null and questionId.length() > 0">
+                c.questionId = #{questionId}
+            </if>
+        </where>
+        ORDER BY comment_time DESC
+    </select>
+
+    <select id="getFollowInfo" resultType="follow">
+        select f.* from follow f
+        <where>
+            <if test="questionId != null and questionId.length() > 0">
+                questionId = #{questionId}
+            </if>
+            <if test="userId != null and userId.length() > 0">
+                AND userId = #{userId}
+            </if>
+            AND is_delete != 1
+        </where>
+    </select>
+
 </mapper>
