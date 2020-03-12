@@ -8,4 +8,6 @@ public interface UserService extends IService<User> {
    User getUser(String username);
    void updateToken(String id, String token);
    User selectUserById(String id);
+
+
 }

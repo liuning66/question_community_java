@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ln.community.mapper.TribeMapper">
+    <select id="getAllArticle" resultType="articleInfo">
+        select t.*,u.nickname from tribe t
+        LEFT JOIN user u
+        ON t.userId = u.id
+        <where>
+            t.isPass != 2
+        </where>
+        ORDER BY t.create_time DESC
+    </select>
+
+    <select id="getArticleComments" resultType="questionComment">
+        select c.*,u.nickname from comment c
+        LEFT JOIN user u ON c.userId = u.id
+        <where>
+            <if test="articleId != null and articleId.length() > 0">
+                questionId = #{articleId}
+            </if>
+            ORDER BY comment_time DESC
+        </where>
+    </select>
+
+    <select id="getMyCollectionList" resultType="articleInfo">
+        select t.* from operate o
+        LEFT JOIN tribe t ON o.article_id = t.id
+        <where>
+            <if test="userId != null and userId.length() > 0">
+                o.user_id = #{userId}
+            </if>
+            AND o.type = 1
+            AND o.is_delete = 0
+        </where>
+        ORDER BY t.create_time DESC
+    </select>
+</mapper>

@@ -32,7 +32,6 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, QuestionInf
   @Transactional
   public QuestionDetail getQuestionDetail(String questionId, String userId) {
     QuestionDetail questionDetail = new QuestionDetail();
-    System.out.println(this);
     try {
       QuestionInfo questionInfo = this.getById(questionId);
       if (questionInfo.getBestAnswerId() != null && questionInfo.getBestAnswerId().length() > 0) {
@@ -54,6 +53,11 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, QuestionInf
       e.printStackTrace();
     }
     return null;
+  }
+
+  @Override
+  public List<QuestionInfo> getMyFollowList(String userId) {
+    return baseMapper.getMyFollowList(userId);
   }
 
 }

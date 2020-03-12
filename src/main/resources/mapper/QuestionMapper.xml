@@ -6,7 +6,7 @@
         LEFT JOIN user u
         ON q.userId = u.id
         <where>
-            q.isPass != 3
+            q.isPass != 2
         </where>
         ORDER BY q.question_time DESC
     </select>
@@ -36,4 +36,14 @@
         </where>
     </select>
 
+    <select id="getMyFollowList" resultType="questionInfo">
+        select q.* from question q
+        LEFT JOIN follow f ON f.questionId = q.id
+        <where>
+            <if test="userId != null and userId.length()>0">
+                f.userId = #{userId}
+            </if>
+            AND f.is_delete = 0
+        </where>
+    </select>
 </mapper>

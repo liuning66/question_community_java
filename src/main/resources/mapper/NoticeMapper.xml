@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ln.community.mapper.NoticeMapper">
+    <select id="getNotice" resultType="notice">
+        select n.*,u.nickname from notice n
+        LEFT JOIN user u ON n.operator_id = u.id
+        <where>
+            <if test="userId != null and userId.length() > 0">
+                n.user_id = #{userId}
+            </if>
+        </where>
+        ORDER BY operate_time DESC
+    </select>
+</mapper>

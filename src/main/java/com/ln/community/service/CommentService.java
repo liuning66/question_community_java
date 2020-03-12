@@ -5,4 +5,5 @@ import com.ln.community.entity.QuestionComment;
 
 public interface CommentService extends IService<QuestionComment> {
     boolean commentQuestion(String questionId, String userId, String content);
+    boolean commentArticle(String questionId, String userId, String content);
 }

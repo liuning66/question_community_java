@@ -1,10 +1,7 @@
 package com.ln.community.controller;
 
 import com.ln.community.entity.*;
-import com.ln.community.service.CommentService;
-import com.ln.community.service.FollowService;
-import com.ln.community.service.QuestionService;
-import com.ln.community.service.UserService;
+import com.ln.community.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +21,8 @@ public class QuestionController {
   public FollowService followService;
   @Autowired
   public CommentService commentService;
-
+  @Autowired
+  NoticeService noticeService;
   @PostMapping("")
   public Result question(String userId, String title, String content) {
     Result result = new Result();
@@ -79,14 +77,19 @@ public class QuestionController {
   }
 
   @PostMapping("/comment")
-  public Result commentQeestion(String questionId, String userId,String content) {
+  public Result commentQeestion(String questionId, String userId,String content, Integer type) {
       Result result = new Result();
       if( content == null || content.length() <= 0 ) {
         result.setStatus(400);
         result.setMsg("回答内容不能为空!");
         return result;
       }
-      boolean flag = this.commentService.commentQuestion(questionId,userId,content);
+      boolean flag;
+      if(type == 0) {
+        flag = this.commentService.commentQuestion(questionId,userId,content);
+      } else  {
+        flag = this.commentService.commentArticle(questionId,userId,content);
+      }
       if(flag) {
         result.setStatus(200);
         result.setMsg("success");

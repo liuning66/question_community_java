@@ -5,6 +5,7 @@ import com.ln.community.entity.Follow;
 import com.ln.community.entity.QuestionInfo;
 import com.ln.community.mapper.FollowMapper;
 import com.ln.community.service.FollowService;
+import com.ln.community.service.NoticeService;
 import com.ln.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class FollowServiceImpl extends ServiceImpl<FollowMapper, Follow> implements FollowService {
   @Autowired
   QuestionService questionService;
+  @Autowired
+  NoticeService noticeService;
 
   @Override
   public Follow getFollowInfo(String questionId, String userId) {
@@ -34,6 +37,7 @@ public class FollowServiceImpl extends ServiceImpl<FollowMapper, Follow> impleme
       } else if (type == 1) {
         follow.setIsDelete(0);
         questionInfo.setApprove(questionInfo.getApprove()+1);
+        this.noticeService.addNotice(userId,questionInfo.getUserId(),"关注了您的问题",questionId,1);
       }
       followFlag = this.updateById(follow);
       questionFlag = this.questionService.updateById(questionInfo);
@@ -46,6 +50,7 @@ public class FollowServiceImpl extends ServiceImpl<FollowMapper, Follow> impleme
       followFlag = this.save(newFollow);
       questionInfo.setApprove(questionInfo.getApprove()+1);
       questionFlag = this.questionService.updateById(questionInfo);
+      this.noticeService.addNotice(userId,questionInfo.getUserId(),"关注了您的问题",questionId,1);
     }
     return (followFlag && questionFlag);
   }
